@@ -98,8 +98,8 @@ class RbcParser extends Parser {
                         }
                         $pos = $answer['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos'];
                         $pos = explode(' ',$pos);
-                        $newBranch->latitude = $pos[0];
-                        $newBranch->longtitude = $pos[1];
+                        $newBranch->latitude = $pos[1];
+                        $newBranch->longtitude = $pos[0];
                         $newBranch->save();
                         $newBranch->bank_id = $bank->id;
                         $newBranch->save();

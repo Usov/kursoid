@@ -5,7 +5,7 @@ return array(
 //	'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
     // uncomment the following lines to use a MySQL database
 //
-    'connectionString' => 'mysql:host=okruble.mysql;dbname=okruble_db',
+    'connectionString' => 'mysql:host=okruble.mysql;dbname=okruble_server',
     'emulatePrepare' => true,
     'username' => 'okruble_mysql',
     'password' => 'E:oUC2aF',

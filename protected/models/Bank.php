@@ -22,7 +22,7 @@ class Bank extends CActiveRecord
         $cut_name = preg_replace('/(банк|Банк|Россия|Российский|российский|России|россии|\(.*\))/','',$name);
         $cut_name = trim($cut_name, '-');
         $cut_name = trim($cut_name);
-//        $cut_name=$name;
+        $cut_name=$name;
         print $cut_name.PHP_EOL;
 //        $cut_name = '1Банк — Московский филиал';
         $this->getDbCriteria()->mergeWith(array(

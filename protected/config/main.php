@@ -90,28 +90,28 @@ return array(
             'errorAction' => 'site/error',
         ),
 
-        'log' => array(
-            'class' => 'CLogRouter',
-            'routes' => array(
-                array(
-                    'class' => 'CFileLogRoute',
-                    'levels' => 'error, warning',
-                ),
-                array(
-                    // направляем результаты профайлинга в ProfileLogRoute (отображается
-                    // внизу страницы)
-                    'class' => 'CProfileLogRoute',
-                    'levels' => 'profile',
-                    'enabled' => true,
-                ),
-//                 uncomment the following to show log messages on web pages
-
-                array(
-                    'class' => 'CWebLogRoute',
-                ),
-
-            ),
-        ),
+//        'log' => array(
+//            'class' => 'CLogRouter',
+//            'routes' => array(
+//                array(
+//                    'class' => 'CFileLogRoute',
+//                    'levels' => 'error, warning',
+//                ),
+//                array(
+//                    // направляем результаты профайлинга в ProfileLogRoute (отображается
+//                    // внизу страницы)
+//                    'class' => 'CProfileLogRoute',
+//                    'levels' => 'profile',
+//                    'enabled' => true,
+//                ),
+////                 uncomment the following to show log messages on web pages
+//
+//                array(
+//                    'class' => 'CWebLogRoute',
+//                ),
+//
+//            ),
+//        ),
 
     ),
 

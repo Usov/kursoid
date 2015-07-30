@@ -61,7 +61,6 @@ class BankiRuParser extends Parser {
     }
 
     public function save(){
-
         foreach($this->banks as $site_bank_id=>$bankInfo){
             $bank = Bank::model()->getBankByNameLike($bankInfo['name'])->find();
             if($bank){

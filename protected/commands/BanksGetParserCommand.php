@@ -37,7 +37,7 @@ class BanksGetParserCommand extends CConsoleCommand{
         foreach($banks['result']['data'] as $bankInfo){
             switch($bankInfo['region']){
                 case 'Москва':
-                default:
+
                     $source_bank_id = $bankInfo['bank_id'];
                     $bank = BankResources::model()->getBankResource(Yii::app()->params['sourceId']['bankiRu'], $source_bank_id)->find();
 
@@ -56,6 +56,8 @@ class BanksGetParserCommand extends CConsoleCommand{
                     }
 
                     $bankNewId[$source_bank_id]=$bank->id;
+                    break;
+                default:
                     break;
             }
 

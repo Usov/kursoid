@@ -7,17 +7,20 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Cache {
+class ApiCache {
     public static function set($key, $data, $time){
+        $hash = '';
         if(Yii::app()->params['cache']['on']==true){
-            Yii::app()->cache->set($key,$data,$time);
-            Yii::app()->cache->set($key.'_check',md5(json_encode($data)),$time);
+            Yii::app()->cache->set($key,json_encode($data),$time);
+            $hash = md5(json_encode($data));
+            Yii::app()->cache->set($key.'_check',$hash,$time);
         }
+        return $hash;
     }
 
     public static function get($key){
         if(Yii::app()->params['cache']['on']==true)
-            return Yii::app()->cache->get($key);
+            return json_decode(Yii::app()->cache->get($key));
     }
 
     public static function getCheck($key){

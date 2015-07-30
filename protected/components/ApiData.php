@@ -3,25 +3,38 @@
 class ApiData {
 
     public static function getRates($checkCache=true){
+        $response = new ApiResponseModel();
+
         $data = array();
-        if($checkCache)
-            $data = Cache::get(Yii::app()->params['cache']['keys']['rates']);
+
+        if($checkCache){
+            $data = ApiCache::get(Yii::app()->params['cache']['keys']['rates']);
+        }
+
         if(!$data){
             $rates = BankCourses::model()->findRatesToApi()->findAll();
-            $answer = new RatesApiModel();
+            $ratesData = new RatesApiModel();
             foreach($rates as $rate){
-                $answer->add($rate);
+                $ratesData->add($rate);
             }
-            $data = $answer->getResult();
-            Cache::set(Yii::app()->params['cache']['keys']['rates'],$data,Yii::app()->params['cache']['time']);
+            $response->setData($ratesData->getResult());
+            $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['rates'],
+                $data, Yii::app()->params['cache']['time']));
         }
-        return $data;
+        else{
+            $response->setData($data);
+            $response->setHash(ApiCache::getCheck(Yii::app()->params['cache']['keys']['rates']));
+        }
+        return $response->getApiResponse();
     }
 
     public static function getDepartments($checkCache=true){
+        $response = new ApiResponseModel();
+
         $data = array();
+
         if($checkCache)
-            $data = Cache::get(Yii::app()->params['cache']['keys']['departments']);
+            $data = ApiCache::get(Yii::app()->params['cache']['keys']['departments']);
 
         if(!$data){
             $availableBanks = BankCourses::model()->findAvailableBanks()->findAll();
@@ -41,17 +54,28 @@ class ApiData {
                     $answer->add();
                 }
             }
-            $data = $answer->getResult();
-            Cache::set(Yii::app()->params['cache']['keys']['departments'],$data,Yii::app()->params['cache']['time']);
+
+            $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['departments'],
+                $data,Yii::app()->params['cache']['time']));
+            $response->setData($answer->getResult());
+
         }
-        return $data;
+        else{
+            $response->setData($data);
+            $response->setHash(ApiCache::getCheck(Yii::app()->params['cache']['keys']['departments']));
+        }
+
+        return $response->getApiResponse();
     }
 
 
     public static function getCoordinates($checkCache=true){
+        $response = new ApiResponseModel();
         $data = array();
+
         if($checkCache)
-            $data = Cache::get(Yii::app()->params['cache']['keys']['coordinates']);
+            $data = ApiCache::get(Yii::app()->params['cache']['keys']['coordinates']);
+
         if(!$data){
             $availableBanks = BankCourses::model()->findAvailableBanks()->findAll();
 
@@ -66,16 +90,21 @@ class ApiData {
             foreach($coordinates as $coordinate){
                 $answer->add($coordinate);
             }
-            $data = $answer->getResult();
-            Cache::set(Yii::app()->params['cache']['keys']['coordinates'],$data,Yii::app()->params['cache']['time']);
+            $response->setData($answer->getResult());
+            $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['coordinates'],
+                $data,Yii::app()->params['cache']['time']));
         }
-        return $data;
+        else{
+            $response->setData($data);
+            $response->setHash(ApiCache::getCheck(Yii::app()->params['cache']['keys']['coordinates']));
+        }
+        return $response->getApiResponse();
     }
 
     public static function getCheck(){
-        return array('rates'=>Cache::getCheck(Yii::app()->params['cache']['keys']['rates']),
-            'departments'=>Cache::getCheck(Yii::app()->params['cache']['keys']['departments']),
-            'coordinates'=>Cache::getCheck(Yii::app()->params['cache']['keys']['departments'])
+        return array('rates'=>ApiCache::getCheck(Yii::app()->params['cache']['keys']['rates']),
+            'departments'=>ApiCache::getCheck(Yii::app()->params['cache']['keys']['departments']),
+            'coordinates'=>ApiCache::getCheck(Yii::app()->params['cache']['keys']['coordinates'])
         );
     }
 }

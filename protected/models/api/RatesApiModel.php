@@ -1,7 +1,7 @@
 <?php
 
 class RatesApiModel {
-    private  $result = array();
+    private $result = array();
     private $currency = array();
 
     public function __construct(){

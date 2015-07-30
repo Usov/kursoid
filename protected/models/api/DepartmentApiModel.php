@@ -16,7 +16,7 @@ class DepartmentApiModel {
     public function add(){
         $info = array();
         $info['name'] = $this->bank->name;
-        $info['phone'] = $this->bank->phone;
+        $info['phone'] = $this->department->phone;
         $info['address'] = $this->department->address;
         $info['bankId'] = $this->bank->id;
         $this->result[$this->department->id] = $info;

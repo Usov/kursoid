@@ -32,7 +32,8 @@ class BankBranches extends CActiveRecord
     {
         $this->getDbCriteria()->mergeWith(array(
             'select' => 'longtitude, latitude, id',
-            'condition' => 'bank_id in ('.implode(',',$availableBank).')'
+            'condition' => 'bank_id in ('.implode(',',$availableBank).')',
+            'group'=>'longtitude, latitude, bank_id'
         ));
         return $this;
     }

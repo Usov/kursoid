@@ -86,7 +86,6 @@ class ApiData {
 
             $answer = new CoordinatesApiModel();
             $coordinates = BankBranches::model()->getDepartmentCoordinates($ids)->findAll();
-
             foreach($coordinates as $coordinate){
                 $answer->add($coordinate);
             }

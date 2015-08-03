@@ -17,6 +17,8 @@ class ParserCommand extends CConsoleCommand{
         $rbcDataEuro->parse();
 
         ApiData::getRates(False);  # обновим кеш, чтобы в нем были валидные данные, пока мы над базой колдуем
+        ApiData::getCoordinates(False);
+        ApiData::getDepartments(False);
 
         $connection=Yii::app()->db;
         $transaction=$connection->beginTransaction();
@@ -36,6 +38,8 @@ class ParserCommand extends CConsoleCommand{
         }
 
         ApiData::getRates(False); # обновим кеш, чтобы в нем были обновленные данные
+        ApiData::getCoordinates(False);
+        ApiData::getDepartments(False);
 
         echo memory_get_usage() - $mem_start;
 

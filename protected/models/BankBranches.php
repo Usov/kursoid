@@ -52,7 +52,7 @@ class BankBranches extends CActiveRecord
         else{
             $newPhone = substr($phoneWithoutChars, 0, 10);
         }
-        $this->phone = $newPhone;
+        $this->phone = '+7'.$newPhone;
     }
 
 

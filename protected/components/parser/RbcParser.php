@@ -76,7 +76,7 @@ class RbcParser extends Parser {
                 $bank = new Bank();
             foreach($bankInfo as $sum=>$info){
                 if(!$bank->id){
-                    $bank->phone = $info['info']['tel'];
+//                    $bank->phone = $info['info']['tel'];
                     $bank->address =  $info['info']['address'];
                     $bank->name = $info['name'];
                     $bank->save();
@@ -100,6 +100,7 @@ class RbcParser extends Parser {
                         $pos = explode(' ',$pos);
                         $newBranch->latitude = $pos[1];
                         $newBranch->longtitude = $pos[0];
+                        $newBranch->preparePhone($info['info']['tel']);
                         $newBranch->save();
                         $newBranch->bank_id = $bank->id;
                         $newBranch->save();

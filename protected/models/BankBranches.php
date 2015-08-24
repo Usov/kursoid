@@ -30,12 +30,29 @@ class BankBranches extends CActiveRecord
 
     public function getDepartmentCoordinates($availableBank)
     {
-        $this->getDbCriteria()->mergeWith(array(
-            'select' => 'longtitude, latitude, id',
-            'condition' => 'bank_id in ('.implode(',',$availableBank).')',
-            'group'=>'longtitude, latitude, bank_id'
-        ));
+        if(count($availableBank)>0)
+            $this->getDbCriteria()->mergeWith(array(
+                'select' => 'longtitude, latitude, id',
+                'condition' => 'bank_id in ('.implode(',',$availableBank).')',
+                'group'=>'longtitude, latitude, bank_id'
+            ));
         return $this;
+    }
+
+    public function preparePhone($phone){
+
+        $phoneWithoutChars = preg_replace('/[^0-9]/', '', $phone);
+        $newPhone = '';
+        if(substr($phoneWithoutChars, 0, 1)== '8' ){
+            $newPhone = substr($phoneWithoutChars, 1, 10);
+        }
+        elseif(substr($phoneWithoutChars, 0, 1)== '+' ){
+            $newPhone = substr($phoneWithoutChars, 2, 10);
+        }
+        else{
+            $newPhone = substr($phoneWithoutChars, 0, 10);
+        }
+        $this->phone = $newPhone;
     }
 
 

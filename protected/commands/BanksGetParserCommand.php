@@ -122,7 +122,7 @@ class BanksGetParserCommand extends CConsoleCommand{
             $newBranch->longtitude = $branch['longitude'];
             $newBranch->bank_id = $bankNewId[$branch['bank_id']];
             if(!isset($result['error'])){
-                $newBranch->phone = $result['result']['data'][0]['phone'];
+                $newBranch->preparePhone($result['result']['data'][0]['phone']);
             }
             $newBranch->save();
         }

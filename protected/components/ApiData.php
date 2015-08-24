@@ -38,26 +38,27 @@ class ApiData {
 
         if(!$data){
             $availableBanks = BankCourses::model()->findAvailableBanks()->findAll();
-
-            $ids = array();
-            foreach($availableBanks as $bankInfo){
-                $ids[]=$bankInfo['bank_id'];
-            }
-            $answer = new DepartmentApiModel();
-            $banks = Bank::model()->getBankToAPI($ids)->findAll();
-
-            foreach($banks as $bank){
-                $answer->setBank($bank);
-                $departments = BankBranches::model()->getBankDepartment($bank->id)->findAll();
-                foreach($departments as $department){
-                    $answer->setDepartment($department);
-                    $answer->add();
+            if(count($availableBanks)>0){
+                $ids = array();
+                foreach($availableBanks as $bankInfo){
+                    $ids[]=$bankInfo['bank_id'];
                 }
-            }
+                $answer = new DepartmentApiModel();
+                $banks = Bank::model()->getBankToAPI($ids)->findAll();
 
-            $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['departments'],
-                $data,Yii::app()->params['cache']['time']));
-            $response->setData($answer->getResult());
+                foreach($banks as $bank){
+                    $answer->setBank($bank);
+                    $departments = BankBranches::model()->getBankDepartment($bank->id)->findAll();
+                    foreach($departments as $department){
+                        $answer->setDepartment($department);
+                        $answer->add();
+                    }
+                }
+
+                $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['departments'],
+                    $data,Yii::app()->params['cache']['time']));
+                $response->setData($answer->getResult());
+            }
 
         }
         else{
@@ -77,21 +78,23 @@ class ApiData {
             $data = ApiCache::get(Yii::app()->params['cache']['keys']['coordinates']);
 
         if(!$data){
+
             $availableBanks = BankCourses::model()->findAvailableBanks()->findAll();
+            if(count($availableBanks)>0){
+                $ids = array();
+                foreach($availableBanks as $bankInfo){
+                    $ids[]=$bankInfo['bank_id'];
+                }
 
-            $ids = array();
-            foreach($availableBanks as $bankInfo){
-                $ids[]=$bankInfo['bank_id'];
+                $answer = new CoordinatesApiModel();
+                $coordinates = BankBranches::model()->getDepartmentCoordinates($ids)->findAll();
+                foreach($coordinates as $coordinate){
+                    $answer->add($coordinate);
+                }
+                $response->setData($answer->getResult());
+                $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['coordinates'],
+                    $data,Yii::app()->params['cache']['time']));
             }
-
-            $answer = new CoordinatesApiModel();
-            $coordinates = BankBranches::model()->getDepartmentCoordinates($ids)->findAll();
-            foreach($coordinates as $coordinate){
-                $answer->add($coordinate);
-            }
-            $response->setData($answer->getResult());
-            $response->setHash(ApiCache::set(Yii::app()->params['cache']['keys']['coordinates'],
-                $data,Yii::app()->params['cache']['time']));
         }
         else{
             $response->setData($data);

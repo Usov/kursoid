@@ -33,6 +33,7 @@ class BanksGetParserCommand extends CConsoleCommand{
             print $banks['error'];
             die();
         }
+        $banksData = array();
         $bankNewId = array();
         foreach($banks['result']['data'] as $bankInfo){
             switch($bankInfo['region']){
@@ -56,6 +57,7 @@ class BanksGetParserCommand extends CConsoleCommand{
                     }
 
                     $bankNewId[$source_bank_id]=$bank->id;
+                    $banksData[$bank->id] = $bank;
                     break;
                 default:
                     break;
@@ -122,8 +124,17 @@ class BanksGetParserCommand extends CConsoleCommand{
             $newBranch->longtitude = $branch['longitude'];
             $newBranch->bank_id = $bankNewId[$branch['bank_id']];
             if(!isset($result['error'])){
-                $newBranch->preparePhone($result['result']['data'][0]['phone']);
+                $ph = $newBranch->preparePhone($result['result']['data'][0]['phone']);
+                if($result['result']['data'][0]['is_main_office'] == 1){
+                    if(isset($banksData[$bankNewId[$branch['bank_id']]])){
+                        $b = $banksData[$bankNewId[$branch['bank_id']]];
+                        $b->phone = $ph;
+                        $b->save();
+                    }
+                }
             }
+
+
             $newBranch->save();
         }
 

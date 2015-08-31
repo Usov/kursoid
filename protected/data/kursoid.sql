@@ -15,6 +15,7 @@ CREATE TABLE `site_bank` (
   `phone` varchar(255) DEFAULT NULL,
   `site_bank_id` int(11) DEFAULT NULL,
   `source_id` int(11) DEFAULT NULL,
+  `source_alias` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38357 DEFAULT CHARSET=utf8
 
@@ -25,6 +26,8 @@ CREATE TABLE `site_bank_branches` (
   `latitude` varchar(16) DEFAULT NULL,
   `bank_id` int(11) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
+  `source_id` int(11) DEFAULT NULL,
+  `source_alias` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=92292 DEFAULT CHARSET=utf8
 

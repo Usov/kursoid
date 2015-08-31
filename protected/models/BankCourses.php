@@ -35,6 +35,14 @@ class BankCourses extends CActiveRecord{
         return $this;
     }
 
+    public function getBankRates($bankId){
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'bank_id=:bi',
+            'params'=>array(':bi'=>$bankId)
+        ));
+        return $this;
+    }
+
 
 
 }

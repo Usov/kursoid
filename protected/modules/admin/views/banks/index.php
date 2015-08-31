@@ -19,4 +19,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'template'=>'{view}{delete}'
         ),
     ),
+
 ));

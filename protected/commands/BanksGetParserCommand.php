@@ -35,9 +35,9 @@ class BanksGetParserCommand extends CConsoleCommand{
             switch($bankInfo['region']){
                 case 'Москва':
                     $source_bank_id = $bankInfo['bank_id'];
-                    $bank = ParseBank::model()->getBankResource(Yii::app()->params['sourceId']['bankiRu'], $source_bank_id)->find();
+                    $bank = Bank::model()->getBankResource(Yii::app()->params['sourceId']['bankiRu'], $source_bank_id)->find();
                     if(!$bank){
-                        $bank = new ParseBank();
+                        $bank = new Bank();
                         $bank->name = $bankInfo['bank_name'];
                         $bank->source_id = Yii::app()->params['sourceId']['bankiRu'];
                         $bank->source_alias = $source_bank_id;
@@ -80,9 +80,9 @@ class BanksGetParserCommand extends CConsoleCommand{
             die();
         }
         foreach($branchData['result']['data'] as $branch){
-            $newBranch = ParseBankBranches::model()->getBranchesResource(Yii::app()->params['sourceId']['bankiRu'], $branch['id'])->find();
+            $newBranch = BankBranches::model()->getBranchesResource(Yii::app()->params['sourceId']['bankiRu'], $branch['id'])->find();
             if(!$newBranch){
-                $newBranch = new ParseBankBranches();
+                $newBranch = new BankBranches();
                 $newBranch->address = $branch['address'];
 
                 $data = array('id'=>'3',

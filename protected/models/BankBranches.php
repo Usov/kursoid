@@ -8,6 +8,8 @@ class BankBranches extends CActiveRecord
     public $address;
     public $bank_id;
     public $phone;
+    public $source_id;
+    public $source_alias;
 
     public function tableName()
     {
@@ -55,6 +57,15 @@ class BankBranches extends CActiveRecord
         if($newPhone)
             $this->phone = '+7'.$newPhone;
         return $this->phone;
+    }
+
+    public function getBranchesResource($source_id, $source_alias)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'source_id=:sd and source_alias=:sa',
+            'params'=>array(':sd'=>$source_id,':sa'=>$source_alias)
+        ));
+        return $this;
     }
 
 

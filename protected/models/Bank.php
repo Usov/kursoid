@@ -4,6 +4,9 @@ class Bank extends CActiveRecord{
     public $id;
     public $name;
     public $phone;
+    public $source_id;
+    public $source_alias;
+
 
 
     public function tableName()
@@ -38,6 +41,16 @@ class Bank extends CActiveRecord{
 
     public function getBankToAdmin()
     {
+        return $this;
+    }
+
+
+    public function getBankResource($source_id, $source_alias)
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'source_id=:sd and source_alias=:sa',
+            'params'=>array(':sd'=>$source_id,':sa'=>$source_alias)
+        ));
         return $this;
     }
 

@@ -59,3 +59,6 @@ class BankBranches extends CActiveRecord
 
 
 }
+
+
+

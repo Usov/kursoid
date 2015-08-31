@@ -1,11 +1,10 @@
 <?php
 
-class Bank extends CActiveRecord
-{
+class Bank extends CActiveRecord{
     public $id;
     public $name;
-    public $address;
     public $phone;
+
 
     public function tableName()
     {
@@ -23,10 +22,8 @@ class Bank extends CActiveRecord
         $cut_name = trim($cut_name, '-');
         $cut_name = trim($cut_name);
         $cut_name=$name;
-//        $cut_name = '1Банк — Московский филиал';
         $this->getDbCriteria()->mergeWith(array(
             'condition'=>'name like "%'.$cut_name.'%"',
-//            'params'=>array(':name'=>$cut_name)
         ));
         return $this;
     }
@@ -38,4 +35,13 @@ class Bank extends CActiveRecord
         ));
         return $this;
     }
+
+    public function getBankToAdmin()
+    {
+        return $this;
+    }
+
+
 }
+
+

@@ -4,7 +4,7 @@ class BanksController extends Controller{
 
     public function actionIndex(){
         $banks = Bank::model()->getBankToAdmin()->findAll();
-        $this->render('index', ['banks'=>$banks]);
+        $this->render('index', array('banks'=>$banks));
     }
 
     public function actionView(){
@@ -12,7 +12,7 @@ class BanksController extends Controller{
         $bank = Bank::model()->findByPk($bankId);
         $departments = BankBranches::model()->getBankDepartment($bankId)->findAll();
         $rates = BankCourses::model()->getBankRates($bankId)->findAll();
-        $this->render('view', ['bank'=>$bank, 'departments'=>$departments, 'rates'=>$rates]);
+        $this->render('view', array('bank'=>$bank, 'departments'=>$departments, 'rates'=>$rates));
     }
 
     public function actionEdit(){

@@ -3,7 +3,7 @@
 class BanksController extends Controller{
 
     public function actionIndex(){
-        $banks = Bank::model()->getBankToAdmin()->findAll();
+        $banks = Bank::model()->with('departmentsCount')->getBankToAdmin()->findAll();
         $this->render('index', array('banks'=>$banks));
     }
 

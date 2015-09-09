@@ -125,7 +125,7 @@ return array(
             )
         ),
         'cache'=>array(
-            'on'=>true,
+            'on'=>false,
             'keys'=>array(
                 'rates'=>'rates_key',
                 'departments'=>'departments_key',

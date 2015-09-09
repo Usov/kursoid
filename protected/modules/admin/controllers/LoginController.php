@@ -10,11 +10,10 @@
 class LoginController extends Controller{
 
     public function actionIndex(){
-        // Проверяем является ли пользователь гостем
-        // ведь если он уже зарегистрирован - формы он не должен увидеть.
         if (Yii::app()->user->isGuest) {
-            if (!empty($_POST['user'])) {
-                $identity = new UserIdentity($_POST['user'],$_POST['pass']);
+            $user = Yii::app()->request->getParam('user');
+            if(!empty($user)) {
+                $identity = new UserIdentity($user, Yii::app()->request->getParam('pass'));
                 $i = $identity->authenticate();
                 if($i){
                     Yii::app()->user->login($identity);
@@ -23,7 +22,7 @@ class LoginController extends Controller{
                 else
                     echo $identity->errorMessage;
             }
-            $this->render('login');
+            $this->render('auth');
         }
     }
 }

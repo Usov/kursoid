@@ -1,12 +1,18 @@
 <?php
 
+define('BANK_STATUS_ON', 0);
+define('BANK_STATUS_MODERATE', 1);
+define('BANK_STATUS_OFF', 2);
+
 class Bank extends CActiveRecord{
+
     public $id;
     public $name;
     public $phone;
     public $source_id;
     public $source_alias;
-
+    public $status;
+    public $is_delete;
 
 
     public function tableName()
@@ -34,7 +40,9 @@ class Bank extends CActiveRecord{
     public function getBankToAPI($ids)
     {
         $this->getDbCriteria()->mergeWith(array(
-            'condition'=>'id in ('.implode(',',$ids).')'
+            'condition'=>'id in ('.implode(',',$ids).')',
+            'is_delete'=>false,
+            'status'=>BANK_STATUS_ON
         ));
         return $this;
     }
@@ -54,6 +62,13 @@ class Bank extends CActiveRecord{
         return $this;
     }
 
+    public function relations()
+    {
+        return array(
+            'departments' => array(self::HAS_MANY, 'BankBranches', array('bank_id'=>'id')),
+            'departmentsCount' => array(self::STAT, 'BankBranches', 'bank_id')
+        );
+    }
 
 }
 

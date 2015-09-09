@@ -1,5 +1,7 @@
 <?php
 
+define('DEPARTMENT_IS_DELETE', 1);
+
 class BankBranches extends CActiveRecord
 {
     public $id;
@@ -10,6 +12,7 @@ class BankBranches extends CActiveRecord
     public $phone;
     public $source_id;
     public $source_alias;
+    public $is_delete;
 
     public function tableName()
     {
@@ -57,6 +60,10 @@ class BankBranches extends CActiveRecord
         if($newPhone)
             $this->phone = '+7'.$newPhone;
         return $this->phone;
+    }
+
+    public function setDelete(){
+        $this->is_delete = DEPARTMENT_IS_DELETE;
     }
 
     public function getBranchesResource($source_id, $source_alias)

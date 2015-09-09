@@ -33,7 +33,7 @@
 </div><!-- form -->
     <h3>Отделения</h3>
 <?
-$dataProvider = new CArrayDataProvider($departments);
+$dataProvider = new CArrayDataProvider($bank->departments);
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$dataProvider,
     'columns'=>array(
@@ -57,7 +57,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ?>
 <h3>Курсы</h3>
 <?
-$dataProvider = new CArrayDataProvider($rates);
+$dataProvider = new CArrayDataProvider($bank->rates);
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$dataProvider,
     'columns'=>array(

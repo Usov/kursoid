@@ -31,5 +31,12 @@ class Controller extends CController
         }
     }
 
+    public function renderJSON($arr){
+        $this->layout=false;
+        header('Content-type: application/json');
+        echo CJSON::encode($arr);
+        Yii::app()->end();
+    }
+
 
 }
